@@ -18,4 +18,13 @@ module.exports.isAdmin = async function(req, res, next) {
 next();
 };
 
+module.exports.isHeadorAdmin = async function(req, res, next) {
+  const currentUser = await User.findById(req.user._id);
+  if (currentUser.role!= "head"&&currentUser.role!= "admin") {
+    req.flash('error', 'You do not have permission to do that!');
+    return res.redirect('back');
+}
+next();
+};
+
 
